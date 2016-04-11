@@ -22,7 +22,11 @@ public class ConverterGUI {
 	private JTextField textXmlFile;
 	private static String xmlNewString;
 	private static String xslNewString;
+	private static String pdfNewString;
+	private static String pdfNameNewString;
 	private JTextField textXslFile;
+	private JTextField textPdfFile;
+	private JTextField textPdfFilename;
 	/**
 	 * Launch the application.
 	 */
@@ -89,11 +93,15 @@ public class ConverterGUI {
 		btnBrowseXml.setBounds(335, 110, 89, 23);
 		frame.getContentPane().add(btnBrowseXml);
 		
+		//Button for running method that converts XML to PDF
 		JButton btnConvert = new JButton("Convert");
 		btnConvert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				pdfNameNewString =textPdfFilename.getText();
+				
 				try {
-					FOPPdfConverter.convertToPDF();
+					main.FOPPdfConverter.convertToPDF();
 				} catch (FOPException e) {
 		            // TODO Auto-generated catch block
 		            e.printStackTrace();
@@ -110,20 +118,47 @@ public class ConverterGUI {
 		btnConvert.setBounds(335, 227, 89, 23);
 		frame.getContentPane().add(btnConvert);
 		
+		
+		//Button for browsing and selecting output location
 		JButton btnOutput = new JButton("Set folder for PDF output");
-		btnOutput.setBounds(265, 0, 169, 23);
+		btnOutput.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser pdfFc = new JFileChooser ();
+				
+				// xslFc.setCurrentDirectory(new java.io.File("."));
+				pdfFc.setDialogTitle("Locate folder for PDF-outputfile");
+				pdfFc.setAcceptAllFileFilterUsed(false);
+				pdfFc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				
+				
+				if (pdfFc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					  // Put absolute filepath in textfield 
+					textPdfFile.setText(pdfFc.getSelectedFile().getPath());
+					  
+					  // Replaces single / with double //, to match java filesearch patterns
+					  String PdffilePath=textXslFile.getText();
+					  pdfNewString = PdffilePath.replace("\\", "\\\\");
+			          
+				}
+				
+			}
+		});
+		btnOutput.setBounds(216, 0, 218, 23);
 		frame.getContentPane().add(btnOutput);
 		
+		//Button for browsing and selecting Xsl-Files
 		JButton btnBrowseXsl = new JButton("Choose format for PDF");
 		btnBrowseXsl.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser xslFc = new JFileChooser ();
-				// fc.setCurrentDirectory(new java.io.File("."));
+				
+				// xslFc.setCurrentDirectory(new java.io.File("."));
 				xslFc.setAcceptAllFileFilterUsed(false);
+				xslFc.setDialogTitle("Locate Xsl-file");
 				
 				if (xslFc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					  // Put absolute filepath in textfield 
-					textXslFile.setText(xslFc.getSelectedFile().getPath());
+					  textXslFile.setText(xslFc.getSelectedFile().getPath());
 					  
 					  // Replaces single / with double //, to match java filesearch patterns
 					  String XslfilePath=textXslFile.getText();
@@ -132,13 +167,27 @@ public class ConverterGUI {
 				}
 			}
 		});
-		btnBrowseXsl.setBounds(121, 0, 143, 23);
+		btnBrowseXsl.setBounds(0, 0, 218, 23);
 		frame.getContentPane().add(btnBrowseXsl);
 		
 		textXslFile = new JTextField();
 		textXslFile.setBounds(131, 22, -20, 20);
 		frame.getContentPane().add(textXslFile);
 		textXslFile.setColumns(10);
+		
+		textPdfFile = new JTextField();
+		textPdfFile.setBounds(436, 22, -12, 20);
+		frame.getContentPane().add(textPdfFile);
+		textPdfFile.setColumns(10);
+		
+		JLabel lblWriteNameOf = new JLabel("Choose the name for the generated PDF-Filename");
+		lblWriteNameOf.setBounds(10, 133, 276, 14);
+		frame.getContentPane().add(lblWriteNameOf);
+		
+		textPdfFilename = new JTextField();
+		textPdfFilename.setBounds(10, 158, 254, 20);
+		frame.getContentPane().add(textPdfFilename);
+		textPdfFilename.setColumns(10);
 	}
 	
 	public static String getXmlFilepath() { 
@@ -147,5 +196,13 @@ public class ConverterGUI {
 	
 	public static String getXslFilepath() { 
 	  	return xslNewString;   
+	}
+	
+	public static String getPdfFolderpath() { 
+	  	return pdfNewString;   
+	}
+	
+	public static String getPdfFilename() { 
+	  	return pdfNameNewString;   
 	}
 }

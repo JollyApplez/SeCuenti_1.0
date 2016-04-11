@@ -23,29 +23,14 @@ public class FOPPdfConverter {
 
 	static String XmlPath = ConverterGUI.getXmlFilepath();
 	static String XslPath = ConverterGUI.getXslFilepath();
+	static String PdfFolder = ConverterGUI.getPdfFolderpath();
+	static String Pdffilename = ConverterGUI.getPdfFilename();
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
-		
-		
-		FOPPdfConverter FOPPdfConverter = new FOPPdfConverter();
-        try {
-        	// Code runs method "convertToPDF" and generates .FO-file as output
-        	FOPPdfConverter.convertToPDF();
-        	// Code runs method "convertToFO" and generates .FO-file as output
-        	// FOPPdfConverter.convertToFO();
-        } catch (FOPException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (TransformerException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
+
+        
+    } 
 	
 	
 	/**
@@ -65,7 +50,7 @@ public class FOPPdfConverter {
         FOUserAgent foUserAgent = fopFactory.newFOUserAgent();
         // Setup output
         OutputStream out;
-        out = new java.io.FileOutputStream("C:\\Users\\Christoffer\\Desktop\\employee.pdf");
+        out = new java.io.FileOutputStream(PdfFolder + Pdffilename + ".pdf");
 
         
     
