@@ -18,10 +18,16 @@ import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
 
+
 public class FOPPdfConverter {
 
+	static String XmlPath = ConverterGUI.getXmlFilepath();
+	static String XslPath = ConverterGUI.getXslFilepath();
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
+		
 		
 		FOPPdfConverter FOPPdfConverter = new FOPPdfConverter();
         try {
@@ -48,11 +54,11 @@ public class FOPPdfConverter {
      * @throws FOPException
      * @throws TransformerException
      */
-    public void convertToPDF()  throws IOException, FOPException, TransformerException {
+    public static void convertToPDF()  throws IOException, FOPException, TransformerException {
         // the XSL FO file
-        File xsltFile = new File("C:\\Users\\Christoffer\\workspace\\SeCuenti_1.0\\Resources\\test.xsl");
+        File xsltFile = new File(XslPath);
         // the XML file which provides the input
-        StreamSource xmlSource = new StreamSource(new File("C:\\Users\\Christoffer\\workspace\\SeCuenti_1.0\\Resources\\testfile.xml"));
+        StreamSource xmlSource = new StreamSource(new File(XmlPath));
         // create an instance of fop factory
         FopFactory fopFactory = FopFactory.newInstance(new File(".").toURI());
         // a user agent is needed for transformation
@@ -60,6 +66,7 @@ public class FOPPdfConverter {
         // Setup output
         OutputStream out;
         out = new java.io.FileOutputStream("C:\\Users\\Christoffer\\Desktop\\employee.pdf");
+
         
     
         try {
@@ -106,7 +113,9 @@ public class FOPPdfConverter {
         OutputStream out;
         
         out = new java.io.FileOutputStream("C:\\Users\\Christoffer\\workspace\\SeCuenti_1.0\\Resources\\temp.fo");
-    
+        
+        
+        
         try {
             // Setup XSLT
             TransformerFactory factory = TransformerFactory.newInstance();
