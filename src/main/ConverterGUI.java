@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -16,11 +17,13 @@ import javax.swing.JFileChooser;
 
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.prefs.Preferences;
 import java.awt.event.ActionEvent;
+
 
 public class ConverterGUI {
 
-	private JFrame frame;
+	private JFrame frmSecuenti;
 	private JTextField textXmlFile;
 	private static String xmlNewString;
 	private static String xslNewString;
@@ -32,12 +35,13 @@ public class ConverterGUI {
 	/**
 	 * Launch the application.
 	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					ConverterGUI window = new ConverterGUI();
-					window.frame.setVisible(true);
+					window.frmSecuenti.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -56,18 +60,19 @@ public class ConverterGUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmSecuenti = new JFrame();
+		frmSecuenti.setTitle("SeCuenti");
+		frmSecuenti.setBounds(100, 100, 450, 300);
+		frmSecuenti.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSecuenti.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Choose XML-file to convert to PDF");
 		lblNewLabel.setBounds(10, 53, 254, 14);
-		frame.getContentPane().add(lblNewLabel);
+		frmSecuenti.getContentPane().add(lblNewLabel);
 		
 		textXmlFile = new JTextField();
 		textXmlFile.setBounds(10, 78, 414, 20);
-		frame.getContentPane().add(textXmlFile);
+		frmSecuenti.getContentPane().add(textXmlFile);
 		textXmlFile.setColumns(10);
 		
 		// Buttom for browsing and choosing XML-file
@@ -98,7 +103,7 @@ public class ConverterGUI {
 			
 		});
 		btnBrowseXml.setBounds(335, 110, 89, 23);
-		frame.getContentPane().add(btnBrowseXml);
+		frmSecuenti.getContentPane().add(btnBrowseXml);
 		
 		
 		//Button for running method that converts XML to PDF
@@ -108,27 +113,34 @@ public class ConverterGUI {
 				
 				pdfNameNewString =textPdfFilename.getText();
 				
-				try {
-					main.FOPPdfConverter.convertToPDF();
-					System.out.println(xmlNewString);
-					System.out.println(xslNewString);
-					System.out.println(pdfNewString);
-					System.out.println(pdfNameNewString);
-				} catch (FOPException e) {
-		            // TODO Auto-generated catch block
-		            e.printStackTrace();
-		        } catch (IOException e) {
-		            // TODO Auto-generated catch block
-		            e.printStackTrace();
-		        } catch (TransformerException e) {
-		            // TODO Auto-generated catch block
-		            e.printStackTrace();
-		        }
-				
+					try {
+						main.FOPPdfConverter.convertToPDF();
+						//default title and icon, that informs user that PDF was generated
+						JOptionPane.showMessageDialog(frmSecuenti,
+						    pdfNameNewString + ".pdf, successfully generated");
+					} catch (FOPException e) {
+			            // TODO Auto-generated catch block
+			            e.printStackTrace();
+			            JOptionPane.showMessageDialog(frmSecuenti,
+			            		e, "Error",
+			            	    JOptionPane.ERROR_MESSAGE);
+			        } catch (IOException e) {
+			            // TODO Auto-generated catch block	
+			        	JOptionPane.showMessageDialog(frmSecuenti,
+			        			e, "Error",
+			        		    JOptionPane.ERROR_MESSAGE);
+			            e.printStackTrace();
+			        } catch (TransformerException e) {
+			            // TODO Auto-generated catch block
+			        	JOptionPane.showMessageDialog(frmSecuenti,
+							    e, "Error",
+							    JOptionPane.ERROR_MESSAGE);
+			            e.printStackTrace();
+			        }					
 			}
 		});
 		btnConvert.setBounds(335, 227, 89, 23);
-		frame.getContentPane().add(btnConvert);
+		frmSecuenti.getContentPane().add(btnConvert);
 		
 		
 		//Button for browsing and selecting output location
@@ -156,7 +168,7 @@ public class ConverterGUI {
 			}
 		});
 		btnOutput.setBounds(216, 0, 218, 23);
-		frame.getContentPane().add(btnOutput);
+		frmSecuenti.getContentPane().add(btnOutput);
 		
 		//Button for browsing and selecting Xsl-Files
 		JButton btnBrowseXsl = new JButton("Choose format for PDF");
@@ -183,26 +195,28 @@ public class ConverterGUI {
 			}
 		});
 		btnBrowseXsl.setBounds(0, 0, 218, 23);
-		frame.getContentPane().add(btnBrowseXsl);
+		frmSecuenti.getContentPane().add(btnBrowseXsl);
 		
 		textXslFile = new JTextField();
 		textXslFile.setBounds(131, 22, -20, 20);
-		frame.getContentPane().add(textXslFile);
+		frmSecuenti.getContentPane().add(textXslFile);
 		textXslFile.setColumns(10);
 		
 		textPdfFile = new JTextField();
 		textPdfFile.setBounds(436, 22, -12, 20);
-		frame.getContentPane().add(textPdfFile);
+		frmSecuenti.getContentPane().add(textPdfFile);
 		textPdfFile.setColumns(10);
 		
 		JLabel lblWriteNameOf = new JLabel("Choose the name for the generated PDF-Filename");
 		lblWriteNameOf.setBounds(10, 133, 276, 14);
-		frame.getContentPane().add(lblWriteNameOf);
+		frmSecuenti.getContentPane().add(lblWriteNameOf);
 		
 		textPdfFilename = new JTextField();
 		textPdfFilename.setBounds(10, 158, 254, 20);
-		frame.getContentPane().add(textPdfFilename);
+		frmSecuenti.getContentPane().add(textPdfFilename);
 		textPdfFilename.setColumns(10);
+		
+		
 	}
 	
 	
