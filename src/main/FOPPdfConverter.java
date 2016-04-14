@@ -43,15 +43,19 @@ public class FOPPdfConverter {
         // the XSL FO file
     	XslPath = ConverterGUI.getXslFilepath();
         File xsltFile = new File(XslPath);
+        
         // the XML file which provides the input
         XmlPath = ConverterGUI.getXmlFilepath();
         StreamSource xmlSource = new StreamSource(new File(XmlPath));
+        
         // create an instance of fop factory
         FopFactory fopFactory = FopFactory.newInstance(new File(".").toURI());
         // a user agent is needed for transformation
         FOUserAgent foUserAgent = fopFactory.newFOUserAgent();
         // Setup output
         OutputStream out;
+        
+        //Pdf file output location and name
         PdfFolder = ConverterGUI.getPdfFolderpath();
         PdfFilename = ConverterGUI.getPdfFilename();
         out = new java.io.FileOutputStream(PdfFolder + "\\" + PdfFilename + ".pdf");

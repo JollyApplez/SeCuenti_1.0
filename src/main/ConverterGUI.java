@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.transform.TransformerException;
 
 import org.apache.fop.apps.FOPException;
@@ -75,7 +77,11 @@ public class ConverterGUI {
 				JFileChooser fc = new JFileChooser ();
 				// fc.setCurrentDirectory(new java.io.File("."));
 		        fc.setDialogTitle("Locate XML-file to Convert");
+		        
+		       //Adds file filter for easyer browsing
 		        fc.setAcceptAllFileFilterUsed(false);
+		        FileFilter filter = new FileNameExtensionFilter("XML File","xml");
+		        fc.setFileFilter(filter);
 				
 				if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					  // Put absolute filepath in textfield 
@@ -161,6 +167,9 @@ public class ConverterGUI {
 				// xslFc.setCurrentDirectory(new java.io.File("."));
 				xslFc.setAcceptAllFileFilterUsed(false);
 				xslFc.setDialogTitle("Locate Xsl-file");
+				// Create filter for easier browsing
+				FileFilter filter = new FileNameExtensionFilter("XSL File","XSL");
+				xslFc.setFileFilter(filter);
 				
 				if (xslFc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					  // Put absolute filepath in textfield 
