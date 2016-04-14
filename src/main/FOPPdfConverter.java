@@ -21,10 +21,10 @@ import org.apache.fop.apps.MimeConstants;
 
 public class FOPPdfConverter {
 
-	static String XmlPath = ConverterGUI.getXmlFilepath();
-	static String XslPath = ConverterGUI.getXslFilepath();
-	static String PdfFolder = ConverterGUI.getPdfFolderpath();
-	static String Pdffilename = ConverterGUI.getPdfFilename();
+	static String XmlPath;
+	static String XslPath;
+	static String PdfFolder;
+	static String PdfFilename;
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -41,8 +41,10 @@ public class FOPPdfConverter {
      */
     public static void convertToPDF()  throws IOException, FOPException, TransformerException {
         // the XSL FO file
+    	XslPath = ConverterGUI.getXslFilepath();
         File xsltFile = new File(XslPath);
         // the XML file which provides the input
+        XmlPath = ConverterGUI.getXmlFilepath();
         StreamSource xmlSource = new StreamSource(new File(XmlPath));
         // create an instance of fop factory
         FopFactory fopFactory = FopFactory.newInstance(new File(".").toURI());
@@ -50,8 +52,13 @@ public class FOPPdfConverter {
         FOUserAgent foUserAgent = fopFactory.newFOUserAgent();
         // Setup output
         OutputStream out;
-        out = new java.io.FileOutputStream(PdfFolder + Pdffilename + ".pdf");
+        PdfFolder = ConverterGUI.getPdfFolderpath();
+        PdfFilename = ConverterGUI.getPdfFilename();
+        out = new java.io.FileOutputStream(PdfFolder + "\\" + PdfFilename + ".pdf");
 
+        System.out.println(XmlPath);
+		System.out.println(XslPath);
+		System.out.println(PdfFolder + PdfFilename + ".pdf");
         
     
         try {

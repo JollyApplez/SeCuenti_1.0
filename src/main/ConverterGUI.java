@@ -68,6 +68,7 @@ public class ConverterGUI {
 		frame.getContentPane().add(textXmlFile);
 		textXmlFile.setColumns(10);
 		
+		// Buttom for browsing and choosing XML-file
 		JButton btnBrowseXml = new JButton("Browse");
 		btnBrowseXml.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -93,6 +94,7 @@ public class ConverterGUI {
 		btnBrowseXml.setBounds(335, 110, 89, 23);
 		frame.getContentPane().add(btnBrowseXml);
 		
+		
 		//Button for running method that converts XML to PDF
 		JButton btnConvert = new JButton("Convert");
 		btnConvert.addActionListener(new ActionListener() {
@@ -102,6 +104,10 @@ public class ConverterGUI {
 				
 				try {
 					main.FOPPdfConverter.convertToPDF();
+					System.out.println(xmlNewString);
+					System.out.println(xslNewString);
+					System.out.println(pdfNewString);
+					System.out.println(pdfNameNewString);
 				} catch (FOPException e) {
 		            // TODO Auto-generated catch block
 		            e.printStackTrace();
@@ -136,7 +142,7 @@ public class ConverterGUI {
 					textPdfFile.setText(pdfFc.getSelectedFile().getPath());
 					  
 					  // Replaces single / with double //, to match java filesearch patterns
-					  String PdffilePath=textXslFile.getText();
+					  String PdffilePath=textPdfFile.getText();
 					  pdfNewString = PdffilePath.replace("\\", "\\\\");
 			          
 				}
@@ -190,6 +196,8 @@ public class ConverterGUI {
 		textPdfFilename.setColumns(10);
 	}
 	
+	
+	// Return methods to pass variable data to FOPPdfConverter
 	public static String getXmlFilepath() { 
   	  	return xmlNewString;   
     }
